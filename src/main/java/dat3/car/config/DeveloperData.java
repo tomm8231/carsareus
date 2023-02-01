@@ -35,16 +35,17 @@ public class DeveloperData implements ApplicationRunner {
     m2.setFavoriteCarColors(new ArrayList<String>(Arrays.asList("Red")));
 
     m1.setPhones(new HashMap<String, String>() {
-                   {
-                     put("Nokia", "1234");
-                     put("Samsung", "2344");
-                   }
-                 });
-    m2.setPhones(new HashMap<String,String>() {
       {
-        put("Apple", "12345");
-        put("Fairphone", "145674");
+        put("Nokia", "1234");
+        put("Samsung", "2344");
       }
+    });
+
+    m2.setPhones(new HashMap<String, String>() {
+                   {
+                     put("Apple", "12345");
+                     put("Fairphone", "145674");
+                   }
                  }
     );
 

@@ -69,4 +69,8 @@ public class MemberService {
         new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this ID does not exist"));
     memberRepository.updateRankingForUser(value, username);
   }
+
+  public void deleteMemberByUsername(String username) {
+    memberRepository.deleteById(username);
+  }
 }

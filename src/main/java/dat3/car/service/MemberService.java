@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -45,4 +46,9 @@ public class MemberService {
     return memberResponses;
   }
 
+  public MemberResponse findMemberByUsername(String username) {
+    Member member = memberRepository.findById(username).orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this ID does not exist"));
+    return new MemberResponse(member, true);
+  }
 }

@@ -67,7 +67,6 @@ public class MemberService {
   public void setRankingForUser(String username, int value) {
     memberRepository.findById(username).orElseThrow(() ->
         new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this ID does not exist"));
-
-
+    memberRepository.updateRankingForUser(value, username);
   }
 }

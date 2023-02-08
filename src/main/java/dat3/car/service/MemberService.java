@@ -71,6 +71,9 @@ public class MemberService {
   }
 
   public void deleteMemberByUsername(String username) {
+    memberRepository.findById(username).orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this ID does not exist"));
+
     memberRepository.deleteById(username);
   }
 }

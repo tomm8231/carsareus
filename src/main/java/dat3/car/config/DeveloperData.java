@@ -52,8 +52,8 @@ public class DeveloperData implements ApplicationRunner {
 
     memberRepository.save(m1);
     memberRepository.save(m2);
-    Car c1 = new Car("Opel", "Vectra", 700, 100);
-    Car c2 = new Car("Toyota", "Yaris", 300, 50);
+    Car c1 = new Car("Opel", "Vectra", 700.00, 100);
+    Car c2 = new Car("Toyota", "Yaris", 300.00, 50);
 
     //Car.builder().brand("Suzuki").model("Swift").pricePrDay(500).bestDiscount(10).build();
 

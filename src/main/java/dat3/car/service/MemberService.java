@@ -40,10 +40,10 @@ public class MemberService {
 
 
 
-  public List<MemberResponse> getMembers(boolean inludeAll) {
+  public List<MemberResponse> getMembers(boolean includeAll) {
     List<Member> members = memberRepository.findAll();
     //I stedet for at lave et for each loop hvor man overfører elementer fra listen til en ny liste:
-    List<MemberResponse> memberResponses = members.stream().map(m->new MemberResponse(m,inludeAll)).toList();
+    List<MemberResponse> memberResponses = members.stream().map(m->new MemberResponse(m,includeAll)).toList();
     return memberResponses;
   }
 

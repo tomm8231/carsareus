@@ -6,6 +6,7 @@ import dat3.car.entity.Member;
 import dat3.car.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -50,5 +51,23 @@ public class MemberService {
     Member member = memberRepository.findById(username).orElseThrow(() ->
         new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this ID does not exist"));
     return new MemberResponse(member, true);
+  }
+
+  public ResponseEntity<Boolean> editMember(MemberRequest body, String username) {
+    //Bør nok laves smartere, så member ikke kun er instancieret
+    memberRepository.findById(username).orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this ID does not exist"));
+
+    Member editedMember = MemberRequest.getMemberEntity(body);
+    memberRepository.save(editedMember);
+    return new ResponseEntity<>(true, HttpStatus.OK);
+  }
+
+
+  public void setRankingForUser(String username, int value) {
+    memberRepository.findById(username).orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this ID does not exist"));
+
+
   }
 }

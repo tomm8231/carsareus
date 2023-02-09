@@ -24,16 +24,16 @@ public class Car {
   @Column(name = "car_model", length = 60, nullable = false)
   private String model;
   @Column(name = "rental_price_day")
-  private Double pricePrDay;
+  private double pricePrDay;
   @Column(name = "max_discount")
   private Integer bestDiscount;
 
   @CreationTimestamp
-  private LocalDateTime createDateTime;
+  private LocalDateTime created;
   @UpdateTimestamp
-  private LocalDateTime updateDateTime;
+  private LocalDateTime edited;
 
-  public Car(String brand, String model, Double pricePrDay, Integer bestDiscount) {
+  public Car(String brand, String model, double pricePrDay, Integer bestDiscount) {
     this.brand = brand;
     this.model = model;
     this.pricePrDay = pricePrDay;

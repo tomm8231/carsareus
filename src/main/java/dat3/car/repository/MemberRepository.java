@@ -9,10 +9,4 @@ import org.springframework.data.jpa.repository.Query;
 public interface MemberRepository extends JpaRepository<Member,String> {
 
   boolean existsByEmail(String email);
-
-
-  @Transactional
-  @Modifying
-  @Query("update Member m set m.ranking = ?1 where m.username = ?2")
-  void updateRankingForUser(int value, String username);
 }

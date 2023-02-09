@@ -2,9 +2,7 @@ package dat3.car.service;
 
 import dat3.car.dto.CarRequest;
 import dat3.car.dto.CarResponse;
-import dat3.car.dto.MemberRequest;
 import dat3.car.entity.Car;
-import dat3.car.entity.Member;
 import dat3.car.repository.CarRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,16 +40,29 @@ public class CarService {
     }
 
     Car newCar = CarRequest.getCarEntity(carRequest);
-    newCar = carRepository.save(newCar);
+    carRepository.save(newCar);
     return new CarResponse(newCar, false);
   }
 
   public ResponseEntity<Boolean> editCar(CarRequest body, int id) {
-    carRepository.findById(id).orElseThrow(()->
+
+   Car car = carRepository.findById(id).orElseThrow(()->
         new ResponseStatusException(HttpStatus.NOT_FOUND, "Car with this ID does not exist"));
 
-    Car editedCar = CarRequest.getCarEntity(body);
-    carRepository.save(editedCar);
+    car.setBrand(body.getBrand());
+    car.setModel(body.getModel());
+    car.setPricePrDay(body.getPricePrDay());
+    car.setBestDiscount(body.getBestDiscount());
+    carRepository.save(car);
+
     return new ResponseEntity<>(true, HttpStatus.OK);
   }
+
+  public void setBestDiscount(int id, Integer bestDiscount) {
+    Car car = carRepository.findById(id).orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND,"Car with this ID does not exist"));
+    car.setBestDiscount(bestDiscount);
+    carRepository.save(car);
+  }
+
 }

@@ -55,19 +55,26 @@ public class MemberService {
 
   public ResponseEntity<Boolean> editMember(MemberRequest body, String username) {
     //Bør nok laves smartere, så member ikke kun er instancieret
-    memberRepository.findById(username).orElseThrow(() ->
+    Member member = memberRepository.findById(username).orElseThrow(() ->
         new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this ID does not exist"));
 
-    Member editedMember = MemberRequest.getMemberEntity(body);
-    memberRepository.save(editedMember);
+    member.setFirstName(body.getFirstName());
+    member.setLastName(body.getLastName());
+    member.setEmail(body.getEmail());
+    member.setStreet(body.getStreet());
+    member.setZip(body.getZip());
+
+    memberRepository.save(member);
     return new ResponseEntity<>(true, HttpStatus.OK);
   }
 
 
   public void setRankingForUser(String username, int value) {
-    memberRepository.findById(username).orElseThrow(() ->
+    Member member = memberRepository.findById(username).orElseThrow(() ->
         new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this ID does not exist"));
-    memberRepository.updateRankingForUser(value, username);
+
+    member.setRanking(value);
+    memberRepository.save(member);
   }
 
   public void deleteMemberByUsername(String username) {

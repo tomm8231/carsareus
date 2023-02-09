@@ -24,26 +24,35 @@ public class CarController {
   //Admin only
   @GetMapping
   List<CarResponse> getMembers(){
-    return carService.getCars(false);
+    return carService.getCars(true);
   }
 
-  //Admin
+  //Admin and User and Anonymous
   @GetMapping(path = "/{id}")
   CarResponse getCarById(@PathVariable int id) throws Exception {
     return carService.findCarById(id);
   }
 
-  //Anonymous
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  //Admin
+  //@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping
   CarResponse addCar(@RequestBody CarRequest body) {
     return carService.addCar(body);
   }
 
-  //Member
+  //Admin
   @PutMapping("/{id}")
   ResponseEntity<Boolean> editCar(@RequestBody CarRequest body, @PathVariable int id) {
     return carService.editCar(body, id);
   }
+
+  //PatchMapping for bestDiscount
+  @PatchMapping("/best-discount/{id}/{value}")
+  void setDiscountForCar(@PathVariable int id, @PathVariable Integer bestDiscount) {
+    carService.setBestDiscount(id, bestDiscount);
+  }
+
+  //DeleteMapping for deleting member by username
 
 
 }

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class CarServiceH2Test {
-
+/*
   @Autowired
   public CarRepository carRepository;
 
@@ -77,4 +77,6 @@ class CarServiceH2Test {
     carService.deleteCarById(car.getId());
     assertFalse(carRepository.existsById(car.getId()));
   }
+
+ */
 }

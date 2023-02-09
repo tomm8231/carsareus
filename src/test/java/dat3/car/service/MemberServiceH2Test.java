@@ -1,5 +1,6 @@
 package dat3.car.service;
 
+import dat3.car.dto.MemberRequest;
 import dat3.car.dto.MemberResponse;
 import dat3.car.entity.Member;
 import dat3.car.repository.MemberRepository;
@@ -7,6 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -40,6 +44,11 @@ class MemberServiceH2Test {
 
   @Test
   void addMember() {
+    Member member = new Member("m3", "test12", "m3@a.dk", "aa",
+        "hansen", "xx vej 34", "Lyngby", "2800");
+    MemberRequest memberRequest = new MemberRequest(member);
+    memberService.addMember(memberRequest);
+    assertEquals("hansen", memberRequest.getLastName());
   }
 
   @Test
@@ -47,5 +56,11 @@ class MemberServiceH2Test {
     List<MemberResponse> members = memberService.getMembers(true);
     assertEquals(2,members.size());
     assertNotNull(members.get(0).getCreated());
+  }
+
+  @Test
+  void getMemberById() {
+    MemberResponse mr = memberService.findMemberByUsername("m1");
+    assertEquals("m1@a.dk", mr.getEmail());
   }
 }

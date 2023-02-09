@@ -53,6 +53,9 @@ public class CarController {
   }
 
   //DeleteMapping for deleting member by username
-
+  @DeleteMapping("/{id}")
+  void deleteCarById(@PathVariable int id) {
+    carService.deleteCarById(id);
+  }
 
 }

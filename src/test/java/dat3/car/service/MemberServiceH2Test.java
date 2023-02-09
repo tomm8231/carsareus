@@ -28,10 +28,11 @@ class MemberServiceH2Test {
   MemberService memberService;
 
   boolean dataIsReady = false;
+
   @BeforeEach
   void setUp() {
-    if(!dataIsReady){  //Explain this
-      memberRepository.save(new Member("m1", "test12", "m1@a.dk",  "bb",
+    if (!dataIsReady) {  //Explain this
+      memberRepository.save(new Member("m1", "test12", "m1@a.dk", "bb",
           "Olsen", "xx vej 34", "Lyngby", "2800"));
       memberRepository.save(new Member("m2", "test12", "m2@a.dk", "aa",
           "hansen", "xx vej 34", "Lyngby", "2800"));
@@ -39,7 +40,6 @@ class MemberServiceH2Test {
       memberService = new MemberService(memberRepository); //Real DB is mocked away with H2
     }
   }
-
 
 
   @Test
@@ -54,7 +54,7 @@ class MemberServiceH2Test {
   @Test
   void getMembersAdmin() {
     List<MemberResponse> members = memberService.getMembers(true);
-    assertEquals(2,members.size());
+    assertEquals(2, members.size());
     assertNotNull(members.get(0).getCreated());
   }
 
@@ -63,4 +63,30 @@ class MemberServiceH2Test {
     MemberResponse mr = memberService.findMemberByUsername("m1");
     assertEquals("m1@a.dk", mr.getEmail());
   }
+
+  @Test
+  void editMember() {
+    Member member = memberRepository.findById("m1").get();
+    MemberRequest body = new MemberRequest(member);
+    body.setLastName("Jensen");
+    memberService.editMember(body, member.getUsername());
+    assertEquals("Jensen", member.getLastName());
+  }
+
+  @Test
+  void setRankingForUser() {
+    Member member = memberRepository.findById("m1").get();
+    memberService.setRankingForUser(member.getUsername(), 50);
+
+    assertEquals(50, member.getRanking());
+  }
+
+  @Test
+  void deleteMemberByUsername() {
+    Member member = memberRepository.findById("m1").get();
+    memberService.deleteMemberByUsername(member.getUsername());
+    assertFalse(memberRepository.existsById(member.getUsername()));
+  }
+
+
 }

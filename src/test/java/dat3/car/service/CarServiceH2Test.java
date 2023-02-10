@@ -3,41 +3,65 @@ package dat3.car.service;
 import dat3.car.dto.CarRequest;
 import dat3.car.dto.CarResponse;
 import dat3.car.entity.Car;
-import dat3.car.entity.Member;
 import dat3.car.repository.CarRepository;
+import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/*
 @DataJpaTest
 class CarServiceH2Test {
-/*
+
   @Autowired
   public CarRepository carRepository;
 
-  CarService carService;
+  public CarService carService;
+
 
   boolean dataIsReady = false;
+
 
   @BeforeEach
   void setUp() {
     if (!dataIsReady) {  //Explain this
-      carRepository.save(new Car("Opel","Vectra",500.00,20));
-      carRepository.save(new Car("Toyota","Yaris",400.00,25));
+      carRepository.save(new Car("Opel", "Vectra", 500.00, 20));
+      carRepository.save(new Car("Toyota", "Yaris", 400.00, 25));
       dataIsReady = true;
       carService = new CarService(carRepository); //Real DB is mocked away with H2
     }
+  }
+  */
+
+
+/*
+Nedenstående dependency injection er foreslået af chatgpt - sammen med nedenstående @AfterEach-annotering + metode.
+Alternativt fejler deleteCarById(), setBestDiscount() og findCarById(), når alle tests bliver kørt på een gang
+- men består, når de bliver kørt individuelt
+
+ */
+
+/*
+  @Autowired
+  private EntityManager entityManager;
+
+  //Denne @AfterEach er foreslået af chatgpt, da id'et på car ikke blev genstartet i @BeforeEach
+  @AfterEach
+  void resetPrimaryKey() {
+    entityManager.createNativeQuery("ALTER TABLE CAR ALTER COLUMN id RESTART WITH 1").executeUpdate();
   }
 
   @Test
   void getCars() {
     List<CarResponse> cars = carService.getCars(true);
-    assertEquals(2,cars.size());
+    assertEquals(2, cars.size());
   }
 
   @Test
@@ -59,9 +83,9 @@ class CarServiceH2Test {
     Car car = carRepository.findById(1).get();
     CarRequest body = new CarRequest(car);
     body.setPricePrDay(1000);
-    carService.editCar(body,car.getId());
+    carService.editCar(body, car.getId());
 
-    assertEquals(1000,car.getPricePrDay());
+    assertEquals(1000, car.getPricePrDay());
   }
 
   @Test
@@ -78,5 +102,7 @@ class CarServiceH2Test {
     assertFalse(carRepository.existsById(car.getId()));
   }
 
- */
+
 }
+
+ */

@@ -5,6 +5,7 @@ import dat3.car.dto.CarResponse;
 import dat3.car.entity.Car;
 import dat3.car.repository.CarRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-/*
+
 @DataJpaTest
 class CarServiceH2Test {
 
@@ -38,7 +39,6 @@ class CarServiceH2Test {
       carService = new CarService(carRepository); //Real DB is mocked away with H2
     }
   }
-  */
 
 
 /*
@@ -48,14 +48,18 @@ Alternativt fejler deleteCarById(), setBestDiscount() og findCarById(), når all
 
  */
 
-/*
+
   @Autowired
-  private EntityManager entityManager;
+  private EntityManagerFactory entityManagerFactory;
 
   //Denne @AfterEach er foreslået af chatgpt, da id'et på car ikke blev genstartet i @BeforeEach
   @AfterEach
   void resetPrimaryKey() {
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    entityManager.getTransaction().begin();
     entityManager.createNativeQuery("ALTER TABLE CAR ALTER COLUMN id RESTART WITH 1").executeUpdate();
+    entityManager.getTransaction().commit();
+    entityManager.close();
   }
 
   @Test
@@ -105,4 +109,4 @@ Alternativt fejler deleteCarById(), setBestDiscount() og findCarById(), når all
 
 }
 
- */
+

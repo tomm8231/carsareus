@@ -29,38 +29,22 @@ class CarServiceH2Test {
 
   boolean dataIsReady = false;
 
+private Car car1;
+private Car car2;
 
   @BeforeEach
   void setUp() {
     if (!dataIsReady) {  //Explain this
-      carRepository.save(new Car("Opel", "Vectra", 500.00, 20));
-      carRepository.save(new Car("Toyota", "Yaris", 400.00, 25));
-      dataIsReady = true;
+      car1 = new Car("Opel", "Vectra", 500.00, 20);
+      car2= new Car("Toyota", "Yaris", 400.00, 25);
+      carRepository.saveAndFlush(car1);
+      carRepository.saveAndFlush(car2);
       carService = new CarService(carRepository); //Real DB is mocked away with H2
+      dataIsReady = true;
+
     }
   }
 
-
-/*
-Nedenstående dependency injection er foreslået af chatgpt - sammen med nedenstående @AfterEach-annotering + metode.
-Alternativt fejler deleteCarById(), setBestDiscount() og findCarById(), når alle tests bliver kørt på een gang
-- men består, når de bliver kørt individuelt
-
- */
-
-
-  @Autowired
-  private EntityManagerFactory entityManagerFactory;
-
-  //Denne @AfterEach er foreslået af chatgpt, da id'et på car ikke blev genstartet i @BeforeEach
-  @AfterEach
-  void resetPrimaryKey() {
-    EntityManager entityManager = entityManagerFactory.createEntityManager();
-    entityManager.getTransaction().begin();
-    entityManager.createNativeQuery("ALTER TABLE CAR ALTER COLUMN id RESTART WITH 1").executeUpdate();
-    entityManager.getTransaction().commit();
-    entityManager.close();
-  }
 
   @Test
   void getCars() {
@@ -70,8 +54,8 @@ Alternativt fejler deleteCarById(), setBestDiscount() og findCarById(), når all
 
   @Test
   void findCarById() {
-    Car car = carRepository.findById(1).get();
-    assertEquals("Vectra", car.getModel());
+    CarResponse response = carService.findCarById(car1.getId());
+    assertEquals("Vectra", car1.getModel());
   }
 
   @Test
@@ -94,16 +78,14 @@ Alternativt fejler deleteCarById(), setBestDiscount() og findCarById(), når all
 
   @Test
   void setBestDiscount() {
-    Car car = carRepository.findById(2).get();
-    carService.setBestDiscount(car.getId(), 5);
-    assertEquals(5, car.getBestDiscount());
+    carService.setBestDiscount(car1.getId(), 5);
+    assertEquals(5, car1.getBestDiscount());
   }
 
   @Test
   void deleteCarById() {
-    Car car = carRepository.findById(1).get();
-    carService.deleteCarById(car.getId());
-    assertFalse(carRepository.existsById(car.getId()));
+    carService.deleteCarById(car1.getId());
+    assertFalse(carRepository.existsById(car1.getId()));
   }
 
 

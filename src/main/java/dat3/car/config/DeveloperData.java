@@ -2,14 +2,18 @@ package dat3.car.config;
 
 import dat3.car.entity.Car;
 import dat3.car.entity.Member;
+import dat3.car.entity.Reservation;
 import dat3.car.repository.CarRepository;
 import dat3.car.repository.MemberRepository;
+import dat3.car.repository.ReservationRepository;
 import org.hibernate.mapping.Map;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.cglib.core.Local;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,10 +23,12 @@ public class DeveloperData implements ApplicationRunner {
 
   MemberRepository memberRepository;
   CarRepository carRepository;
+  ReservationRepository reservationRepository;
 
-  public DeveloperData(MemberRepository memberRepository, CarRepository carRepository) {
+  public DeveloperData(MemberRepository memberRepository, CarRepository carRepository, ReservationRepository reservationRepository) {
     this.memberRepository = memberRepository;
     this.carRepository = carRepository;
+    this.reservationRepository = reservationRepository;
   }
 
   private final String passwordUsedByAll = "test12";
@@ -31,23 +37,6 @@ public class DeveloperData implements ApplicationRunner {
   public void run(ApplicationArguments args) throws Exception {
     Member m1 = new Member("member1", passwordUsedByAll, "memb1@a.dk", "Kurt", "Wonnegut", "Lyngbyvej 2", "Lyngby", "2800");
     Member m2 = new Member("member2", passwordUsedByAll, "aaa@dd.dk", "Hanne", "Wonnegut", "Lyngbyvej 2", "Lyngby", "2800");
-    m1.setFavoriteCarColors(new ArrayList<String>(Arrays.asList("Yellow")));
-    m2.setFavoriteCarColors(new ArrayList<String>(Arrays.asList("Red")));
-
-    m1.setPhones(new HashMap<String, String>() {
-      {
-        put("Nokia", "1234");
-        put("Samsung", "2344");
-      }
-    });
-
-    m2.setPhones(new HashMap<String, String>() {
-                   {
-                     put("Apple", "12345");
-                     put("Fairphone", "145674");
-                   }
-                 }
-    );
 
 
     memberRepository.save(m1);
@@ -59,6 +48,17 @@ public class DeveloperData implements ApplicationRunner {
 
     carRepository.save(c1);
     carRepository.save(c2);
+
+    LocalDate rentalDate1 = LocalDate.parse("2023-05-05");
+    Reservation reservation1 = new Reservation(rentalDate1, m1, c1);
+
+    LocalDate rentalDate2 = LocalDate.parse("2023-06-06");
+    Reservation reservation2 = new Reservation( rentalDate2, m2, c2);
+
+    reservationRepository.save(reservation1);
+    reservationRepository.save(reservation2);
+
+
   }
 
 

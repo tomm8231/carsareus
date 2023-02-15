@@ -6,6 +6,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,7 +20,7 @@ public class Car {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int Id;
+  private int CarId;
 
   @Column(name = "car_brand", length = 50, nullable = false)
   private String brand;
@@ -32,6 +35,10 @@ public class Car {
   private LocalDateTime created;
   @UpdateTimestamp
   private LocalDateTime edited;
+
+  @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+  private List<Reservation> reservations = new ArrayList<>();
+
 
   public Car(String brand, String model, double pricePrDay, Integer bestDiscount) {
     this.brand = brand;

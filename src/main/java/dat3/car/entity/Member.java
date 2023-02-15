@@ -38,14 +38,8 @@ public class Member {
   @UpdateTimestamp
   private LocalDateTime lastEdited;
 
-  @ElementCollection
-  List<String> favoriteCarColors = new ArrayList<>();
-
-  @ElementCollection
-  @MapKeyColumn(name = "description")
-  @Column(name = "phone_number")
-  Map<String,String> phones = new HashMap<>();
-
+  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+  private List<Reservation> reservations = new ArrayList<>();
 
 
 

@@ -54,7 +54,7 @@ private Car car2;
 
   @Test
   void findCarById() {
-    CarResponse response = carService.findCarById(car1.getId());
+    CarResponse response = carService.findCarById(car1.getCarId());
     assertEquals("Vectra", car1.getModel());
   }
 
@@ -71,21 +71,21 @@ private Car car2;
     Car car = carRepository.findById(1).get();
     CarRequest body = new CarRequest(car);
     body.setPricePrDay(1000);
-    carService.editCar(body, car.getId());
+    carService.editCar(body, car.getCarId());
 
     assertEquals(1000, car.getPricePrDay());
   }
 
   @Test
   void setBestDiscount() {
-    carService.setBestDiscount(car1.getId(), 5);
+    carService.setBestDiscount(car1.getCarId(), 5);
     assertEquals(5, car1.getBestDiscount());
   }
 
   @Test
   void deleteCarById() {
-    carService.deleteCarById(car1.getId());
-    assertFalse(carRepository.existsById(car1.getId()));
+    carService.deleteCarById(car1.getCarId());
+    assertFalse(carRepository.existsById(car1.getCarId()));
   }
 
 

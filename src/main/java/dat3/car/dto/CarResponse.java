@@ -29,7 +29,7 @@ public class CarResponse {
 
   //Convert Car entity to Car DTO
   public CarResponse(Car c, boolean includeAll) {
-    this.id = c.getId();
+    this.id = c.getCarId();
     this.brand = c.getBrand();
     this.model = c.getModel();
     this.pricePrDay = c.getPricePrDay();

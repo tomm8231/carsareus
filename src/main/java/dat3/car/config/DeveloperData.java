@@ -25,8 +25,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"dat3.security.repository", "dat3.car.repository"})
-@ComponentScan(basePackages = "dat3.security")
+//@EnableJpaRepositories(basePackages = {"dat3.security.repository", "dat3.car.repository"})
+//@ComponentScan(basePackages = "dat3.security")
 public class DeveloperData implements ApplicationRunner {
 
   MemberRepository memberRepository;

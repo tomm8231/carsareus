@@ -92,7 +92,7 @@ public class SecurityConfig {
 
             .requestMatchers("/", "/**").permitAll());
 
-           // .requestMatchers(HttpMethod.GET,"/api/demo/anonymous").permitAll());
+           //.requestMatchers(HttpMethod.GET,"/api/demo/anonymous").permitAll());
 
            // Demonstrates another way to add roles to an endpoint
            // .requestMatchers(HttpMethod.GET, "/api/demo/admin").hasAuthority("ADMIN")

@@ -26,7 +26,6 @@ public class ReservationController {
   @GetMapping
   List<ReservationResponse> getReservations() {
     return reservationService.getReservations();
-
   }
   
 }

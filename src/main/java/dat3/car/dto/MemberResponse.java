@@ -3,11 +3,14 @@ package dat3.car.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import dat3.car.entity.Member;
+import dat3.car.entity.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,6 +33,8 @@ public class MemberResponse {
   LocalDateTime edited;
   Integer ranking;
   Boolean approved;
+  List<ReservationResponse> reservations;
+
 
   //Convert Member Entity to Member DTO
   public MemberResponse(Member m, boolean includeAll) {
@@ -45,6 +50,14 @@ public class MemberResponse {
       this.edited = m.getLastEdited();
       this.approved = m.isApproved();
       this.ranking = m.getRanking();
+    }
+
+    //Nedenstående lavet i samarbejde med Marcus
+    if (!m.getReservations().isEmpty()) {
+      reservations = new ArrayList<>();
+      for (Reservation reservation : m.getReservations()) {
+        this.reservations.add(new ReservationResponse(reservation));
+      }
     }
   }
 }

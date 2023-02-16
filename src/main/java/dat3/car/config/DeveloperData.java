@@ -60,11 +60,14 @@ public class DeveloperData implements ApplicationRunner {
     LocalDate rentalDate1 = LocalDate.parse("2023-05-05");
     Reservation reservation1 = new Reservation(rentalDate1, m1, c1);
 
+    /*
     LocalDate rentalDate2 = LocalDate.parse("2023-06-06");
     Reservation reservation2 = new Reservation( rentalDate2, m2, c2);
 
+     */
+
     reservationRepository.save(reservation1);
-    reservationRepository.save(reservation2);
+    //reservationRepository.save(reservation2);
 
     setupUserWithRoleUsers();
 

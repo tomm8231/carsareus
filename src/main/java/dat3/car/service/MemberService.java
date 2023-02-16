@@ -22,6 +22,13 @@ public class MemberService {
     this.memberRepository = memberRepository;
   }
 
+  /*
+  boolean checkIfMemberHasReservations(String username) {
+    return
+  }
+   */
+
+
   public MemberResponse addMember(MemberRequest memberRequest){
 
     if(memberRepository.existsById(memberRequest.getUsername())){
@@ -50,6 +57,9 @@ public class MemberService {
   public MemberResponse findMemberByUsername(String username) {
     Member member = memberRepository.findById(username).orElseThrow(() ->
         new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this ID does not exist"));
+
+    //boolean hasReservation = memberRepository.existsMemberByReservationsIsNotEmpty(member);
+
     return new MemberResponse(member, true);
   }
 

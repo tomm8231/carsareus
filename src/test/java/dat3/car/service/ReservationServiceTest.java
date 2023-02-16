@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@ComponentScan("dat3.car.service")
+//@ComponentScan("dat3.car.service")
 /*
 @ComponentScan("dat3.car.service") is an annotation in Spring Framework that tells Spring where to look for
 Spring-managed components, such as Spring beans, within a package or packages. In this case, it specifies that Spring
@@ -28,17 +28,14 @@ should scan the dat3.car.service package and its sub-packages to find Spring-man
 class ReservationServiceTest {
 
   @Autowired
-  ReservationService reservationService;
-  @Autowired
   ReservationRepository reservationRepository;
   @Autowired
-  CarService carService;
+  MemberRepository memberRepository;
   @Autowired
   CarRepository carRepository;
-  @Autowired
-  MemberService memberService;
-  @Autowired
-  MemberRepository memberRepository;
+  ReservationService reservationService;
+
+
 
 
   boolean dataIsReady = false;
@@ -71,7 +68,7 @@ class ReservationServiceTest {
       rentalDate2 = LocalDate.parse("2023-07-07");
 
 
-      reservationService = new ReservationService(reservationRepository, memberRepository, carRepository); //Real DB is mocked away with H2
+     reservationService = new ReservationService(reservationRepository, memberRepository, carRepository); //Real DB is mocked away with H2
 
       dataIsReady = true;
 
@@ -84,7 +81,6 @@ class ReservationServiceTest {
     reservationRequest.setCarId(car1.getCarId());
     reservationRequest.setUsername(member1.getUsername());
     reservationRequest.setRentalDate(rentalDate1);
-
 
     ReservationResponse reservationResponse = reservationService.makeReservation(reservationRequest);
     assertEquals(LocalDate.parse("2023-08-08"), reservationResponse.getRentalDate());

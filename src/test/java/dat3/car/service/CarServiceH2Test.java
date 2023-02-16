@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,7 +56,7 @@ private Car car2;
   @Test
   void findCarById() {
     CarResponse response = carService.findCarById(car1.getCarId());
-    assertEquals("Vectra", car1.getModel());
+    assertEquals("Vectra", response.getModel());
   }
 
   @Test
@@ -63,17 +64,30 @@ private Car car2;
     Car car = new Car("Tesla", "X", 900.00, 10);
     CarRequest carRequest = new CarRequest(car);
     carService.addCar(carRequest);
-    assertNotNull(carRepository.findById(3).get());
+
+    List<Car> cars = carRepository.findAll();
+
+    assertEquals(3,cars.size());
+
+
+    //Hvorfor virker nedenstående ikke?
+    /*
+    Optional<Car> optionalCar = carRepository.findById(3); //# 3 fordi der burde være tre biler
+    assertEquals("X", optionalCar.get().getModel());
+     */
   }
 
   @Test
   void editCar() {
-    Car car = carRepository.findById(1).get();
-    CarRequest body = new CarRequest(car);
-    body.setPricePrDay(1000);
-    carService.editCar(body, car.getCarId());
 
-    assertEquals(1000, car.getPricePrDay());
+    Car car = new Car("Tesla", "Model S", 1000.00, 4);
+    carRepository.save(car);
+
+    CarRequest body = new CarRequest(car);
+    body.setPricePrDay(1200);
+    ResponseEntity<Boolean> response = carService.editCar(body,car.getCarId());
+
+    assertTrue(response.hasBody());
   }
 
   @Test

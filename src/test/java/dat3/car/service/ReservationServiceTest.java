@@ -71,8 +71,6 @@ class ReservationServiceTest {
       rentalDate2 = LocalDate.parse("2023-07-07");
 
 
-      //memberService = new MemberService(memberRepository);
-      //carService = new CarService(carRepository);
       reservationService = new ReservationService(reservationRepository, memberRepository, carRepository); //Real DB is mocked away with H2
 
       dataIsReady = true;
@@ -89,7 +87,6 @@ class ReservationServiceTest {
 
 
     ReservationResponse reservationResponse = reservationService.makeReservation(reservationRequest);
-    //assertTrue(reservationResponse.getRentalDate().isEqual(LocalDate.parse("2023-08-08")));
     assertEquals(LocalDate.parse("2023-08-08"), reservationResponse.getRentalDate());
   }
 }

@@ -59,4 +59,9 @@ public class CarController {
     //Se Lars' bud på github
   }
 
+  @GetMapping("/brand-model/{brand}/{model}")
+  List<CarResponse> getCarsByBrandAndModel(@PathVariable String brand, @PathVariable String model) {
+    return carService.findCarsByBrandAndModel(brand, model);
+  }
+
 }

@@ -1,0 +1,22 @@
+.table tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+table {
+    width: 100%;
+}
+
+th,
+td {
+    padding: 1em;
+    text-align: center;
+}
+
+
+
+/*
+To make sure that the text in the cells lines up with the text in the header,
+you may also want to set a fixed width for each column. You can do this using the width property on the th elements.
+For example, to make the first column 25% of the table width and the second column 75% of the table width,
+This will set the width of the first th element (which corresponds to the "ID" column) to 25% of the table width,
+and the width of the second th element (which corresponds to the "Brand and Model" column) to 75% of the table width.*/

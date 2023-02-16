@@ -26,6 +26,7 @@ public class ReservationResponse {
     this.id = reservation.getId();
     this.memberUsername = reservation.getMember().getUsername();
     this.carId = reservation.getCar().getCarId();
+    this.rentalDate = reservation.getRentalDate();
   }
 
 }

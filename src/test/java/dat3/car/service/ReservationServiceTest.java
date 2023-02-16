@@ -1,5 +1,7 @@
 package dat3.car.service;
 
+import dat3.car.dto.ReservationRequest;
+import dat3.car.dto.ReservationResponse;
 import dat3.car.entity.Car;
 import dat3.car.entity.Member;
 import dat3.car.entity.Reservation;
@@ -47,6 +49,8 @@ class ReservationServiceTest {
   private Car car2;
   private Member member1;
   private Member member2;
+  private LocalDate rentalDate1;
+  private LocalDate rentalDate2;
 
   @BeforeEach
   void setUp() {
@@ -63,13 +67,9 @@ class ReservationServiceTest {
       memberRepository.saveAndFlush(member1);
       memberRepository.saveAndFlush(member2);
 
-      LocalDate rentalDate1 = LocalDate.parse("2023-08-08");
-      LocalDate rentalDate2 = LocalDate.parse("2023-07-07");
-      reservation1 = new Reservation(rentalDate1, member1, car1);
-      reservation2 = new Reservation(rentalDate2, member2, car2);
+      rentalDate1 = LocalDate.parse("2023-08-08");
+      rentalDate2 = LocalDate.parse("2023-07-07");
 
-      reservationRepository.saveAndFlush(reservation1);
-      reservationRepository.saveAndFlush(reservation2);
 
       //memberService = new MemberService(memberRepository);
       //carService = new CarService(carRepository);
@@ -82,11 +82,14 @@ class ReservationServiceTest {
 
   @Test
   void makeReservation() {
-    Car car = new Car("Seat", "Whatever", 200.00, 10);
-    Member member = new Member("m5", "test12", "m5@a.dk", "DD",
-        "Hammock", "xx vej 34", "Lyngby", "2800");
-    LocalDate rentalDate = LocalDate.parse("2023-09-09");
-    Reservation reservation = new Reservation(rentalDate, member, car);
-    assertTrue(reservation.getRentalDate().isEqual(LocalDate.parse("2023-09-09")));
+    ReservationRequest reservationRequest = new ReservationRequest();
+    reservationRequest.setCarId(car1.getCarId());
+    reservationRequest.setUsername(member1.getUsername());
+    reservationRequest.setRentalDate(rentalDate1);
+
+
+    ReservationResponse reservationResponse = reservationService.makeReservation(reservationRequest);
+    //assertTrue(reservationResponse.getRentalDate().isEqual(LocalDate.parse("2023-08-08")));
+    assertEquals(LocalDate.parse("2023-08-08"), reservationResponse.getRentalDate());
   }
 }

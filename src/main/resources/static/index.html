@@ -1,10 +1,66 @@
+<!--
+chatGPT!
+This code makes an AJAX request to the /api/cars endpoint using the Fetch API, and then uses the response
+to build an HTML table using the map() method to iterate over each car in the array.
+The table is then inserted into the DOM using the innerHTML property of the carTable element.
+I've added the table-striped and table-hover classes to the <table> element to give the table some visual
+ interest and to highlight rows when the mouse hovers over them. I've also added some custom CSS to give the
+ table rows a light gray background color when hovered over.
+Note that I've also used the toFixed() method to format the pricePrDay value with two decimal places and
+added a dollar sign to make it clearer that this is a currency value.
+-->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+    <title>Cars</title>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" integrity="sha384-+c1dbVQLqOZ5ttBvzib+6CkKhTyfPp6+s+U6bf8U6WcvU/gY1xF6Z1UBvQ8PKdW" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+    <!--    <style>
+            .table tbody tr:hover {
+                background-color: #f2f2f2;
+            }
+        </style>-->
 </head>
 <body>
-<p>Hul igennem</p>
+
+<div class="container mt-4">
+    <h1>Cars</h1>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Price per Day</th>
+        </tr>
+        </thead>
+        <tbody id="car-table">
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Nh8O+Q9vpiZ/TsTxygYJ39A6c92zJ/DyFnG1peRNtaTjKdz1X9h9SmtSgRf/jY33" crossorigin="anonymous"></script>
+<script>
+    fetch('/api/cars')
+        .then(response => response.json())
+        .then(cars => {
+            const carTable = document.querySelector('#car-table');
+            carTable.innerHTML = cars.map(car => `
+          <tr>
+            <td>${car.id}</td>
+            <td>${car.brand}</td>
+            <td>${car.model}</td>
+            <td>$${car.pricePrDay.toFixed(2)}</td>
+          </tr>
+        `).join('');
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+</script>
+
 </body>
 </html>

@@ -25,9 +25,9 @@ class CarRepositoryTest {
   @BeforeEach
   void setUp() {
     if (!dataIsReady) {
-      Car c1 = new Car("Opel", "Vectra", 700.00, 100);
-      Car c2 = new Car("Toyota", "Yaris", 500.00, 100);
-      Car c3 = new Car("Opel", "Vectra", 700.00, 100);
+      Car c1 = new Car("Opel", "Vectra", 300.00, 100);
+      Car c2 = new Car("Toyota", "Yaris", 200.00, 100);
+      Car c3 = new Car("Opel", "Vectra", 100.00, 100);
       cars.add(c1);
       cars.add(c2);
       cars.add(c3);
@@ -42,5 +42,11 @@ class CarRepositoryTest {
   void findByBrandAndModel() {
     List<Car> carsFound = carRepository.findByBrandAndModel("Opel", "Vectra");
     assertEquals(2, carsFound.size());
+  }
+
+  @Test
+  void findAveragePricePerDay() {
+    Double pricePrDay = carRepository.findAveragePricePerDay();
+    assertEquals(200,pricePrDay);
   }
 }

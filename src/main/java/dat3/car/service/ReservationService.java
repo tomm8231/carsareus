@@ -58,6 +58,15 @@ public class ReservationService {
 
   }
 
+  public List<ReservationResponse> findAllReservationsByMember(Member member) {
+    List<Reservation> reservations = reservationRepository.findAllByMember(member);
+    List<ReservationResponse> responses = reservations.stream().map(r -> new ReservationResponse(r)).toList();
+
+    return responses;
+  }
+
+
+
   public List<ReservationResponse> getReservations() {
     List<Reservation> reservations = reservationRepository.findAll();
     return reservations.stream().map(r -> new ReservationResponse(r)).toList();

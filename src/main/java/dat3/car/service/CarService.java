@@ -81,4 +81,8 @@ public class CarService {
     return cars.stream().map(c -> new CarResponse(c, false)).toList();
   }
 
+  public Double findAveragePricePrDay() {
+    return carRepository.findAveragePricePerDay();
+  }
+
 }

@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 Spring-managed components, such as Spring beans, within a package or packages. In this case, it specifies that Spring
 should scan the dat3.car.service package and its sub-packages to find Spring-managed components.
  */
+
 class ReservationServiceTest {
 
   @Autowired

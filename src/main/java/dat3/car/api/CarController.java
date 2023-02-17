@@ -64,4 +64,9 @@ public class CarController {
     return carService.findCarsByBrandAndModel(brand, model);
   }
 
+  @GetMapping("/average-price-per-day")
+  Double findAveragePricePrDay() {
+    return carService.findAveragePricePrDay();
+  }
+
 }

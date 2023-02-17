@@ -87,4 +87,8 @@ class ReservationRepositoryTest {
 
   }
 
+  @Test
+  void existsByCarAndRentalDate() {
+    assertTrue(reservationRepository.existsByCarAndRentalDate(car1, rentalDate1));
+  }
 }

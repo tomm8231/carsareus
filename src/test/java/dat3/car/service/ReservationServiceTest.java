@@ -43,9 +43,6 @@ class ReservationServiceTest {
 
   boolean dataIsReady = false;
 
-  private Reservation reservation1;
-  private Reservation reservation2;
-  private Reservation reservation3;
   private Car car1;
   private Car car2;
   private Member member1;
@@ -71,18 +68,6 @@ class ReservationServiceTest {
       rentalDate1 = LocalDate.parse("2023-08-08");
       rentalDate2 = LocalDate.parse("2023-07-07");
 
-      /*
-      reservation1 = new Reservation(rentalDate1,member1,car1);
-      reservation2 = new Reservation(rentalDate2,member2,car2);
-      reservation3 = new Reservation(rentalDate2, member2, car1);
-
-      reservationRepository.saveAndFlush(reservation1);
-      reservationRepository.saveAndFlush(reservation2);
-      reservationRepository.saveAndFlush(reservation3);
-
-       */
-
-
 
      reservationService = new ReservationService(reservationRepository,
          memberRepository, carRepository); //Real DB is mocked away with H2
@@ -102,15 +87,5 @@ class ReservationServiceTest {
     ReservationResponse reservationResponse = reservationService.makeReservation(reservationRequest);
     assertEquals(LocalDate.parse("2023-08-08"), reservationResponse.getRentalDate());
   }
-/*
-  @Test
-  void findAllReservationsByMember() {
-    List<Reservation> responsesMember1 = reservationRepository.findAllByMember(member1);
-    List<Reservation> responsesMember2 = reservationRepository.findAllByMember(member2);
-    assertEquals(1, responsesMember1.size());
-    assertEquals(2,responsesMember2.size());
 
-  }
-
- */
 }

@@ -60,8 +60,9 @@ public class ReservationService {
   }
 
   public List<ReservationResponse> findAllReservationsByMember(String username) {
-    Optional<Member> member = memberRepository.findById(username);
-    List<Reservation> reservations = reservationRepository.findAllByMember(member.get());
+    Member member = memberRepository.findById(username).orElseThrow(
+        () ->new ResponseStatusException(HttpStatus.BAD_REQUEST, "Member does not exist"));
+    List<Reservation> reservations = reservationRepository.findAllByMember(member);
     List<ReservationResponse> responses = reservations.stream().map(r -> new ReservationResponse(r)).toList();
 
     return responses;

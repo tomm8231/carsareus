@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,6 +104,12 @@ private Car car2;
   }
 
 
+  @Test
+  void findCarsByBrandAndModel() {
+    List<Car> cars = carRepository.findByBrandAndModel("Opel", "Vectra");
+    assertEquals(1, cars.size());
+
+  }
 
 
 }

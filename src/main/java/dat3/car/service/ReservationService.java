@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,8 +59,9 @@ public class ReservationService {
 
   }
 
-  public List<ReservationResponse> findAllReservationsByMember(Member member) {
-    List<Reservation> reservations = reservationRepository.findAllByMember(member);
+  public List<ReservationResponse> findAllReservationsByMember(String username) {
+    Optional<Member> member = memberRepository.findById(username);
+    List<Reservation> reservations = reservationRepository.findAllByMember(member.get());
     List<ReservationResponse> responses = reservations.stream().map(r -> new ReservationResponse(r)).toList();
 
     return responses;

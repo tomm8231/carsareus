@@ -27,5 +27,10 @@ public class ReservationController {
   List<ReservationResponse> getReservations() {
     return reservationService.getReservations();
   }
+
+  @GetMapping("/{username}")
+  List<ReservationResponse> getAllReservationsByMember(@PathVariable String username) {
+    return reservationService.findAllReservationsByMember(username);
+  }
   
 }

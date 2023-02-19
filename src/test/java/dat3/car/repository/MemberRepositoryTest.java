@@ -1,8 +1,10 @@
 package dat3.car.repository;
 
+import dat3.car.dto.MemberResponse;
 import dat3.car.entity.Car;
 import dat3.car.entity.Member;
 import dat3.car.entity.Reservation;
+import dat3.car.service.MemberService;
 import dat3.car.service.ReservationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,11 +13,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.*;
-@DataJpaTest
-class ReservationRepositoryTest {
 
+@DataJpaTest
+class MemberRepositoryTest {
 
   @Autowired
   ReservationRepository reservationRepository;
@@ -36,6 +39,7 @@ class ReservationRepositoryTest {
   private Car car2;
   private Member member1;
   private Member member2;
+  private Member member3;
   private LocalDate rentalDate1;
   private LocalDate rentalDate2;
 
@@ -52,6 +56,8 @@ class ReservationRepositoryTest {
           "Olsen", "xx vej 34", "Lyngby", "2800");
       member2 = new Member("m2", "test12", "m2@a.dk", "aa",
           "hansen", "xx vej 34", "Lyngby", "2800");
+      member3 = new Member("m3", "test12", "m3@a.dk", "Rasmus", "Modsat", "Den anden vej 3", "Ringsted", "2500");
+
       memberRepository.saveAndFlush(member1);
       memberRepository.saveAndFlush(member2);
 
@@ -77,20 +83,10 @@ class ReservationRepositoryTest {
     }
   }
 
-
   @Test
-  void findAllReservationsByMember() {
-    List<Reservation> responsesMember1 = reservationRepository.findAllByMember(member1);
-    List<Reservation> responsesMember2 = reservationRepository.findAllByMember(member2);
-    assertEquals(1, responsesMember1.size());
-    assertEquals(2,responsesMember2.size());
-
-  }
-/*
-  @Test
-  void existsByCarAndRentalDate() {
-    assertTrue(reservationRepository.existsByCarAndRentalDate(car1, rentalDate1));
+  void findMembersWithReservations() {
+    List<Member> memberWithReservations = memberRepository.findMembersWithReservations();
+    assertEquals(2, memberWithReservations.size());
   }
 
- */
 }

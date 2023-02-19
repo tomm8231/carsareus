@@ -12,6 +12,11 @@ public interface MemberRepository extends JpaRepository<Member,String> {
 
   boolean existsByEmail(String email);
 
+  //Inspireret af Marcus
+  @Query("SELECT DISTINCT m FROM Member m JOIN m.reservations r")
+  List<Member> findMembersWithReservations();
+
+
 
 
 }

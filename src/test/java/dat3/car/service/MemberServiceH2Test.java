@@ -2,7 +2,9 @@ package dat3.car.service;
 
 import dat3.car.dto.MemberRequest;
 import dat3.car.dto.MemberResponse;
+import dat3.car.entity.Car;
 import dat3.car.entity.Member;
+import dat3.car.entity.Reservation;
 import dat3.car.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,6 +39,7 @@ class MemberServiceH2Test {
           "Olsen", "xx vej 34", "Lyngby", "2800"));
       memberRepository.save(new Member("m2", "test12", "m2@a.dk", "aa",
           "hansen", "xx vej 34", "Lyngby", "2800"));
+
       dataIsReady = true;
       memberService = new MemberService(memberRepository); //Real DB is mocked away with H2
     }
@@ -88,5 +92,33 @@ class MemberServiceH2Test {
     assertFalse(memberRepository.existsById(member.getUsername()));
   }
 
+  //Forsøg på at lave unit test på findMembersWithReservation i service-lag
+/*
+  @Test
+  void findMembersWithReservations() {
+    Member newMember1 = new Member("m5", "test12", "m5@a.dk", "jj",
+        "Jessen", "xx vej 34", "Lyngby", "2800");
+    Member newMember2 = new Member("m6", "test12", "m6@a.dk", "kk",
+        "Jensen", "xx vej 34", "Lyngby", "2800");
+    Member newMember3 = new Member("m7", "test12", "m7@a.dk", "mm",
+        "Jensen", "xx vej 34", "Lyngby", "2800");
 
+    memberRepository.saveAndFlush(newMember1);
+    memberRepository.saveAndFlush(newMember2);
+    memberRepository.saveAndFlush(newMember3);
+
+
+    Reservation.builder().member(newMember1).build();
+    Reservation.builder().member(newMember2).build();
+
+
+
+
+    List<MemberResponse> members = memberService.findMembersWithReservations();
+
+    assertEquals(2, members.size());
+
+  }
+
+ */
 }

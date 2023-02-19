@@ -2,6 +2,7 @@ package dat3.car.service;
 
 import dat3.car.dto.MemberRequest;
 import dat3.car.dto.MemberResponse;
+import dat3.car.dto.ReservationResponse;
 import dat3.car.entity.Member;
 import dat3.car.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,5 +87,11 @@ public class MemberService {
         new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this ID does not exist"));
 
     memberRepository.deleteById(username);
+  }
+
+  public List<MemberResponse> findMembersWithReservations() {
+    List<Member> membersWithReservations = memberRepository.findMembersWithReservations();
+    List<MemberResponse> responses = membersWithReservations.stream().map(m->new MemberResponse(m,true)).toList();
+    return responses;
   }
 }

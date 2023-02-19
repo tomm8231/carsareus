@@ -58,7 +58,10 @@ class MemberController {
     memberService.deleteMemberByUsername(username);
   }
 
-
+@GetMapping("/with-reservation")
+  List<MemberResponse> findMembersWithReservations() {
+    return memberService.findMembersWithReservations();
+}
 
 
 }

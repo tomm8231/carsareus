@@ -33,14 +33,17 @@ class CarServiceH2Test {
 
 private Car car1;
 private Car car2;
+private Car car3;
 
   @BeforeEach
   void setUp() {
     if (!dataIsReady) {  //Explain this
       car1 = new Car("Opel", "Vectra", 500.00, 20);
-      car2= new Car("Toyota", "Yaris", 400.00, 25);
+      car2 = new Car("Toyota", "Yaris", 400.00, 25);
+      car3 = new Car("Ford", "Fiesta", 300, 25);
       carRepository.saveAndFlush(car1);
       carRepository.saveAndFlush(car2);
+      carRepository.saveAndFlush(car3);
       carService = new CarService(carRepository); //Real DB is mocked away with H2
       dataIsReady = true;
 
@@ -51,7 +54,7 @@ private Car car2;
   @Test
   void getCars() {
     List<CarResponse> cars = carService.getCars(true);
-    assertEquals(2, cars.size());
+    assertEquals(3, cars.size());
   }
 
   @Test
@@ -68,7 +71,7 @@ private Car car2;
 
     List<Car> cars = carRepository.findAll();
 
-    assertEquals(3,cars.size());
+    assertEquals(4,cars.size());
 
 
     //Hvorfor virker nedenstående ikke?
@@ -112,6 +115,13 @@ private Car car2;
   }
 
 
+  @Test
+  void findCarsByBestDiscount() {
+    List<CarResponse> carsWithBestDiscount = carService.findCarsByBestDiscount();
+    assertFalse(carsWithBestDiscount.isEmpty());
+    assertEquals(2, carsWithBestDiscount.size());
+    assertEquals(25, carsWithBestDiscount.get(0).getBestDiscount());
+  }
 }
 
 

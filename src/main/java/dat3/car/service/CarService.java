@@ -82,6 +82,7 @@ public class CarService {
     return cars.stream().map(c -> new CarResponse(c, false)).toList();
   }
 
+  //Har valgt ikke at returnere et dto-objekt, da det virkede unødvendigt
   public Double findAveragePricePrDay() {
     return carRepository.findAveragePricePerDay();
   }

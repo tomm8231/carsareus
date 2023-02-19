@@ -22,12 +22,6 @@ public class MemberService {
     this.memberRepository = memberRepository;
   }
 
-  /*
-  boolean checkIfMemberHasReservations(String username) {
-    return
-  }
-   */
-
 
   public MemberResponse addMember(MemberRequest memberRequest){
 

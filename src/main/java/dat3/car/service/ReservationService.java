@@ -74,4 +74,8 @@ public class ReservationService {
     List<Reservation> reservations = reservationRepository.findAll();
     return reservations.stream().map(r -> new ReservationResponse(r)).toList();
   }
+
+  public Integer countReservationsByMember(Member member) {
+    return reservationRepository.countReservationsByMember(member);
+  }
 }

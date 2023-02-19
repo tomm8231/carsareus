@@ -86,6 +86,12 @@ class ReservationRepositoryTest {
     assertEquals(2,responsesMember2.size());
 
   }
+
+  @Test
+  void countReservationsByMember() {
+    assertEquals(2,reservationRepository.countReservationsByMember(member2));
+    assertEquals(1, reservationRepository.countReservationsByMember(member1));
+  }
 /*
   @Test
   void existsByCarAndRentalDate() {

@@ -27,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.*;
 Spring-managed components, such as Spring beans, within a package or packages. In this case, it specifies that Spring
 should scan the dat3.car.service package and its sub-packages to find Spring-managed components.
  */
-
 class ReservationServiceTest {
 
   @Autowired
@@ -89,4 +88,14 @@ class ReservationServiceTest {
     assertEquals(LocalDate.parse("2023-08-08"), reservationResponse.getRentalDate());
   }
 
+  @Test
+  void countReservationsByMember() {
+    Reservation reservation1 = new Reservation(rentalDate1, member1, car1);
+    Reservation reservation2 = new Reservation(rentalDate2, member1, car2);
+    reservationRepository.saveAndFlush(reservation1);
+    reservationRepository.saveAndFlush(reservation2);
+
+    assertEquals(2,reservationService.countReservationsByMember(member1));
+    assertEquals(0,reservationService.countReservationsByMember(member2));
+  }
 }

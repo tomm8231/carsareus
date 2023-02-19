@@ -32,5 +32,10 @@ public class ReservationController {
   List<ReservationResponse> getAllReservationsByMember(@PathVariable String username) {
     return reservationService.findAllReservationsByMember(username);
   }
+
+  @GetMapping("/{username}/count")
+  Integer countReservationsByMember(@PathVariable String username) {
+    return reservationService.countReservationsByMember(username);
+  }
   
 }

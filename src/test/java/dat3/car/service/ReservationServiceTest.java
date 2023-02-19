@@ -95,7 +95,7 @@ class ReservationServiceTest {
     reservationRepository.saveAndFlush(reservation1);
     reservationRepository.saveAndFlush(reservation2);
 
-    assertEquals(2,reservationService.countReservationsByMember(member1));
-    assertEquals(0,reservationService.countReservationsByMember(member2));
+    assertEquals(2,reservationService.countReservationsByMember(member1.getUsername()));
+    assertEquals(0,reservationService.countReservationsByMember(member2.getUsername()));
   }
 }

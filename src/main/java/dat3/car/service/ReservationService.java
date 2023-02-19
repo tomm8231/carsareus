@@ -75,7 +75,10 @@ public class ReservationService {
     return reservations.stream().map(r -> new ReservationResponse(r)).toList();
   }
 
-  public Integer countReservationsByMember(Member member) {
+  public Integer countReservationsByMember(String username) {
+    Member member = memberRepository.findById(username).orElseThrow(()
+        -> new ResponseStatusException(HttpStatus.BAD_REQUEST,"User with this id not found"));
+
     return reservationRepository.countReservationsByMember(member);
   }
 }

@@ -69,4 +69,9 @@ public class CarController {
     return carService.findAveragePricePrDay();
   }
 
+  @GetMapping("/best-discount")
+  List<CarResponse> findCarsWithBestDiscount() {
+    return carService.findCarsByBestDiscount();
+  }
+
 }

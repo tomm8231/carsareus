@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -83,6 +84,13 @@ public class CarService {
 
   public Double findAveragePricePrDay() {
     return carRepository.findAveragePricePerDay();
+  }
+
+  public List<CarResponse> findCarsByBestDiscount() {
+    Integer bestDiscount = carRepository.findBestDiscount();
+    List<Car> carsWithBestDiscount = carRepository.findCarsByBestDiscount(bestDiscount);
+    List<CarResponse> response = carsWithBestDiscount.stream().map(c -> new CarResponse(c,true)).toList();
+    return response;
   }
 
 }

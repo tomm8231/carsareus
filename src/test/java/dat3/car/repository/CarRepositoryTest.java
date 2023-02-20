@@ -67,4 +67,10 @@ class CarRepositoryTest {
     assertEquals("Toyota", carsWithBestDiscount.get(0).getBrand());
     assertEquals("Ford", carsWithBestDiscount.get(1).getBrand());
   }
+
+  @Test
+  void getCarsWithoutReservation() {
+    List<Car> carsWithoutRes = carRepository.getCarsWithoutReservation();
+    assertEquals(4,carsWithoutRes.size());
+  }
 }

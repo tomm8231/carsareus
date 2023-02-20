@@ -16,4 +16,9 @@ public interface CarRepository extends JpaRepository<Car,Integer> {
   Integer findBestDiscount();
 
   List<Car> findCarsByBestDiscount(Integer bestDiscount);
+
+  // Find all cars that have not been reserved
+  @Query("SELECT c FROM Car c WHERE c.id NOT IN (SELECT DISTINCT r.car.id FROM Reservation r)")
+  List<Car> getCarsWithoutReservation();
+
 }

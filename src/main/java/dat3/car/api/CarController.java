@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/cars")
+@CrossOrigin
 public class CarController {
 
   private CarService carService;
@@ -23,7 +24,7 @@ public class CarController {
 
   //Admin only
   @GetMapping
-  List<CarResponse> getMembers(){
+  List<CarResponse> getCars(){
     return carService.getCars(true);
   }
 

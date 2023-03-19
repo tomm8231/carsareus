@@ -5,6 +5,7 @@ import dat3.car.dto.MemberResponse;
 import dat3.car.dto.ReservationResponse;
 import dat3.car.entity.Member;
 import dat3.car.repository.MemberRepository;
+import dat3.security.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,9 @@ public class MemberService {
 
 
     Member newMember = MemberRequest.getMemberEntity(memberRequest);
+    newMember.addRole(Role.USER);
     newMember = memberRepository.save(newMember);
+
 
     return new MemberResponse(newMember, false);
   }
